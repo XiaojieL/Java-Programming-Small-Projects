@@ -1,0 +1,79 @@
+import java.util.Scanner;
+import java.util.Random;
+
+public class GuessingGame {
+
+	public static void main(String[] args) {
+		
+		//Initialize the game with a default "YES" input
+		String guessInput = "YES";
+		//Assume bestScore is infinity for now
+		int bestScore = Integer.MAX_VALUE;
+		
+		//Start game by a while loop
+		while(guessInput.equalsIgnoreCase("YES") || guessInput.equalsIgnoreCase("Y")){
+			
+			//Track number of guesses the player has taken in this round
+			int currentScore = 0;
+		
+			//Generate a random number and print it out
+			Random ran = new Random();
+			int randomNum = ran.nextInt(100) +1;
+			System.out.println("Random number: " + randomNum);
+
+			//Prompt the player to guess a number
+			Scanner sc = new Scanner(System.in);
+			System.out.println("Enter your guess: ");
+			int guessNum = sc.nextInt();
+			currentScore++;
+
+			//Check player's guess and provide feedback
+			if (guessNum == randomNum){
+				System.out.println("Correct!");
+				break;
+			}
+
+			while (guessNum != randomNum) {
+				if(guessNum > 100 || guessNum <= 0){
+					System.out.println("Number must be between 1 and 100.");
+					sc = new Scanner(System.in);
+					System.out.print("Enter your guess: ");
+					guessNum = sc.nextInt();
+				}
+				
+				else{
+					if (guessNum > randomNum){
+						System.out.println("Too high!");
+						sc = new Scanner(System.in);
+						System.out.print("Enter your guess: ");
+						guessNum = sc.nextInt();
+						currentScore++;
+					}
+					else {
+						System.out.println("Too low!");
+						sc = new Scanner(System.in);
+						System.out.print("Enter your guess: ");
+						guessNum = sc.nextInt();
+						currentScore++;
+					}		
+				}
+			}
+			
+			//Update bestScore whenever currentScore is less than bestScore
+			if(bestScore > currentScore){
+				bestScore = currentScore;
+			}
+			
+			//Print out game result
+			System.out.print("You took " + currentScore +" guesses.");
+			System.out.println("Your best so far is " + bestScore);
+
+			//Ask the player if he/she wants to play again
+			sc = new Scanner(System.in);
+			System.out.println("Play again?");
+			guessInput = sc.next();
+		}
+		
+		System.out.println("Good-bye!");
+	}
+}
